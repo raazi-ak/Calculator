@@ -16,7 +16,10 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -55,19 +58,21 @@ fun MainLayout(){
 
         Box(
             modifier = Modifier
-                .padding(30.dp)
+                .padding(top= 30.dp)
         ) {
             Column {
                 LazyVerticalGrid(
-                    columns = GridCells.Adaptive(70.dp),
-                    contentPadding = PaddingValues(all = 20.dp)
+                    columns = GridCells.Adaptive(50.dp),
+                    contentPadding = PaddingValues(all=60.dp)
                 ) {
 
                     items(9) { index ->
-                        Button(shape=  ,onClick = { /*TODO*/ }) {
-                            Text(text = "${index + 1}")
-                        }
 
+                       FilledTonalButton(modifier=Modifier.wrapContentSize(),onClick = { /*TODO*/ }, shape = RoundedCornerShape(100)) {
+                          Spacer(modifier = Modifier.height(45.dp))
+                           Text("${index +1}", fontWeight = FontWeight.SemiBold, fontSize = 40.sp)
+                           Spacer(modifier = Modifier.height(45.dp))
+                       }
                     }
                 }
             }
