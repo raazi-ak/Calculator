@@ -14,7 +14,12 @@ class CalcRepo( ){
     }
 
     fun evaluate(): String {
-         inputString=  ExpressionBuilder(inputString).build().evaluate().toString()
+        inputString = try {
+            val result = ExpressionBuilder(inputString).build().evaluate()
+            result.toString()
+        } catch (e: Exception) {
+            "0"
+        }
         return inputString
 
     }

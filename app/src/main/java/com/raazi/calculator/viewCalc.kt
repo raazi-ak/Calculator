@@ -1,5 +1,6 @@
 package com.raazi.calculator
 
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -24,9 +26,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -57,13 +59,18 @@ fun MainLayout(viewModel: CalcViewModel) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.End
-                    ) {
+                    ) {val scroll = rememberScrollState(viewModel.scrollLinearIncrease)
+
                         Text(
                             text = viewModel.inputString.value,
-                            modifier = Modifier.wrapContentHeight(),
+                            modifier = Modifier
+                                .wrapContentHeight()
+                                .horizontalScroll(scroll),
                             fontWeight = FontWeight.Bold,
                             fontSize = 60.sp,
-                            color = MaterialTheme.colorScheme.onSecondary
+                            color = MaterialTheme.colorScheme.onSecondary,
+                            maxLines = 1,
+                            overflow = TextOverflow.Visible
                         )
                     }
                 }
@@ -97,17 +104,28 @@ fun MainLayout(viewModel: CalcViewModel) {
 
                     }
 
-                    IconButton(onClick = { /*TODO*/ },
-                        colors=IconButtonDefaults.iconButtonColors(
-                        Color.Transparent),
-                        modifier= Modifier.size(70.dp)) {
 
+                    IconButton(onClick = { viewModel.appendInput("(") },
+                        colors=IconButtonDefaults.iconButtonColors(
+                            MaterialTheme.colorScheme.secondaryContainer),
+                        modifier= Modifier.size(70.dp)) {
+                        Text(
+                            "( ",
+                            fontSize = 30.sp,
+                            color = MaterialTheme.colorScheme.onSecondaryContainer,
+                            textAlign = TextAlign.Center
+                        )
                     }
-                    IconButton(onClick = { /*TODO*/ },
+                    IconButton(onClick = { viewModel.appendInput(")") },
                         colors=IconButtonDefaults.iconButtonColors(
-                            Color.Transparent),
+                            MaterialTheme.colorScheme.secondaryContainer),
                         modifier= Modifier.size(70.dp)) {
-
+                        Text(
+                            " )",
+                            fontSize = 30.sp,
+                            color = MaterialTheme.colorScheme.onSecondaryContainer,
+                            textAlign = TextAlign.Center
+                        )
                     }
                     IconButton(
                         onClick = { viewModel.appendInput("/") },
